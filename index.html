@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>دعوة ملكية | Royal Invites</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Aref+Ruqaa:wght@400;700&family=Reem+Kufi:wght@400;700&family=Lateef&family=Marhey:wght@400;700&family=Great+Vibes&family=Cinzel:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Parisienne&family=Cormorant+Garamond:wght@400;600&family=Tajawal:wght@300;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💍</text></svg>">
+</head>
+<body>
+<header class="nav">
+  <div class="logo">✦ <span data-i18n="brand">دعوة ملكية</span></div>
+  <nav><a href="#templates" data-i18n="navT">القوالب</a><a href="#pricing" data-i18n="navP">الأسعار</a>
+  <button id="langBtn" class="ghost">English</button></nav>
+</header>
+
+<section class="hero">
+  <canvas id="heroCanvas"></canvas>
+  <div class="hero-in">
+    <p class="kicker" data-i18n="kicker">لأجمل ليلة في العمر</p>
+    <h1 data-i18n="heroT">دعوات زفاف فيديو فاخرة</h1>
+    <p class="sub" data-i18n="heroS">اختر قالباً، اكتب الأسماء والتاريخ، ونزّل دعوتك فيديو جاهز للمشاركة خلال دقيقة.</p>
+    <a href="#templates" class="btn gold" data-i18n="cta">ابدأ تصميم دعوتك</a>
+  </div>
+</section>
+
+<section id="templates" class="wrap">
+  <h2 class="title" data-i18n="tT">اختر قالبك</h2>
+  <div id="grid" class="grid"></div>
+</section>
+
+<section id="pricing" class="wrap">
+  <h2 class="title" data-i18n="pT">الباقات</h2>
+  <div class="plans">
+    <div class="plan"><h3 data-i18n="p1">مجاني</h3><div class="price">$0</div><ul><li data-i18n="p1a">4 قوالب أساسية</li><li data-i18n="p1b">تصدير فيديو مع علامة مائية</li></ul></div>
+    <div class="plan hot"><h3 data-i18n="p2">ذهبي</h3><div class="price">$9</div><ul><li data-i18n="p2a">كل القوالب الفاخرة</li><li data-i18n="p2b">بدون علامة مائية + جودة عالية</li><li data-i18n="p2c">موسيقى خلفية</li></ul></div>
+    <div class="plan"><h3 data-i18n="p3">ملكي</h3><div class="price">$29</div><ul><li data-i18n="p3a">تصميم مخصص بالكامل</li><li data-i18n="p3b">صفحة RSVP وتأكيد حضور</li></ul></div>
+  </div>
+  <p class="pay" data-i18n="pay">💳 الدفع عبر Binance Pay / USDT (TRC20) — قريباً</p>
+</section>
+<footer data-i18n="foot">© دعوة ملكية — صُنع بحب</footer>
+
+<!-- Editor -->
+<div id="editor" class="editor hidden">
+  <div class="ed-top"><button id="closeEd" class="ghost">✕</button><b id="edName"></b>
+    <div><button id="replay" class="ghost" data-i18n="replay">↻ إعادة</button><button id="exportBtn" class="btn gold sm" data-i18n="export">⬇ تصدير فيديو</button></div></div>
+  <div class="ed-body">
+    <div class="stage"><canvas id="stage" width="720" height="1280"></canvas><div id="prog" class="prog hidden"><div></div><span></span></div></div>
+    <aside class="panel">
+      <label data-i18n="lIntro">العبارة الافتتاحية</label><input id="f_intro">
+      <label data-i18n="lBride">اسم العروس</label><input id="f_bride">
+      <label data-i18n="lGroom">اسم العريس</label><input id="f_groom">
+      <label data-i18n="lDate">التاريخ</label><input id="f_date">
+      <label data-i18n="lVenue">المكان</label><input id="f_venue">
+      <label data-i18n="lMsg">رسالة</label><textarea id="f_msg" rows="2"></textarea>
+      <label data-i18n="lNameFont">خط الأسماء</label><select id="f_font1"></select>
+      <label data-i18n="lBodyFont">خط النصوص</label><select id="f_font2"></select>
+      <label data-i18n="lColor">لون النص</label><div id="swatches" class="sw"></div>
+      <label data-i18n="lAnim">حركة الظهور</label>
+      <select id="f_anim"><option value="fade">Fade ✦</option><option value="rise">Rise ↑</option><option value="zoom">Zoom</option><option value="blur">Blur</option><option value="type">Typewriter</option><option value="goldthread">خيط ذهبي ✦ Gold Thread</option><option value="petals">بتلات الورد ✿ Rose Petals</option><option value="engrave">نقش على الرخام ◈ Engrave</option></select>
+      <label data-i18n="lDur">مدة الفيديو (ثانية)</label><input id="f_dur" type="range" min="6" max="20" value="10">
+    </aside>
+  </div>
+</div>
+<script src="app.js"></script>
+</body></html>
