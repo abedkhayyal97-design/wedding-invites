@@ -1,67 +1,101 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>دعوة ملكية | Royal Invites</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Aref+Ruqaa:wght@400;700&family=Reem+Kufi:wght@400;700&family=Lateef&family=Marhey:wght@400;700&family=Great+Vibes&family=Cinzel:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Parisienne&family=Cormorant+Garamond:wght@400;600&family=Tajawal:wght@300;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>دعوة ملكية | دعوات زفاف فيديو فاخرة</title>
+<meta name="description" content="صمّم دعوة زفاف فيديو فاخرة بقوالب سينمائية وخطوط عربية ذهبية خلال دقيقة. Luxury wedding video invitations.">
+<meta name="theme-color" content="#0b0907">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💍</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="image" href="img/hero.webp" fetchpriority="high">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@700&family=Reem+Kufi:wght@500&family=Tajawal:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@700&family=Reem+Kufi:wght@500&family=Tajawal:wght@400;500&display=swap"></noscript>
+<link rel="stylesheet" href="style.css?v=3">
 </head>
 <body>
 <header class="nav">
   <div class="logo">✦ <span data-i18n="brand">دعوة ملكية</span></div>
-  <nav><a href="#templates" data-i18n="navT">القوالب</a><a href="#pricing" data-i18n="navP">الأسعار</a>
-  <button id="langBtn" class="ghost">English</button></nav>
+  <nav><a href="#templates" data-i18n="navT">القوالب</a>
+  <button id="langBtn" class="ghost" type="button" lang="en">English</button></nav>
 </header>
 
+<main>
 <section class="hero">
-  <canvas id="heroCanvas"></canvas>
+  <div class="hero-bg" aria-hidden="true"></div>
   <div class="hero-in">
     <p class="kicker" data-i18n="kicker">لأجمل ليلة في العمر</p>
     <h1 data-i18n="heroT">دعوات زفاف فيديو فاخرة</h1>
-    <p class="sub" data-i18n="heroS">اختر قالباً، اكتب الأسماء والتاريخ، ونزّل دعوتك فيديو جاهز للمشاركة خلال دقيقة.</p>
+    <p class="sub" data-i18n="heroS">اختر قالباً، اكتب الأسماء والتاريخ، واحصل على دعوة فيديو ذهبية جاهزة للمشاركة خلال دقيقة.</p>
     <a href="#templates" class="btn gold" data-i18n="cta">ابدأ تصميم دعوتك</a>
   </div>
 </section>
 
 <section id="templates" class="wrap">
   <h2 class="title" data-i18n="tT">اختر قالبك</h2>
+  <p class="hint-c" data-i18n="tHint">مرّر أو المس القالب لمعاينته، ثم اضغط لتعديله</p>
   <div id="grid" class="grid"></div>
 </section>
-
-<section id="pricing" class="wrap">
-  <h2 class="title" data-i18n="pT">الباقات</h2>
-  <div class="plans">
-    <div class="plan"><h3 data-i18n="p1">مجاني</h3><div class="price">$0</div><ul><li data-i18n="p1a">4 قوالب أساسية</li><li data-i18n="p1b">تصدير فيديو مع علامة مائية</li></ul></div>
-    <div class="plan hot"><h3 data-i18n="p2">ذهبي</h3><div class="price">$9</div><ul><li data-i18n="p2a">كل القوالب الفاخرة</li><li data-i18n="p2b">بدون علامة مائية + جودة عالية</li><li data-i18n="p2c">موسيقى خلفية</li></ul></div>
-    <div class="plan"><h3 data-i18n="p3">ملكي</h3><div class="price">$29</div><ul><li data-i18n="p3a">تصميم مخصص بالكامل</li><li data-i18n="p3b">صفحة RSVP وتأكيد حضور</li></ul></div>
-  </div>
-  <p class="pay" data-i18n="pay">💳 الدفع عبر Binance Pay / USDT (TRC20) — قريباً</p>
-</section>
-<footer data-i18n="foot">© دعوة ملكية — صُنع بحب</footer>
+</main>
+<footer><span data-i18n="foot">© دعوة ملكية — صُنع بحب</span></footer>
 
 <!-- Editor -->
-<div id="editor" class="editor hidden">
-  <div class="ed-top"><button id="closeEd" class="ghost">✕</button><b id="edName"></b>
-    <div><button id="replay" class="ghost" data-i18n="replay">↻ إعادة</button><button id="exportBtn" class="btn gold sm" data-i18n="export">⬇ تصدير فيديو</button></div></div>
+<div id="editor" class="editor hidden" role="dialog" aria-modal="true" aria-labelledby="edName">
+  <div class="ed-top">
+    <button id="closeEd" class="ghost icon" type="button" aria-label="إغلاق">✕</button>
+    <b id="edName"></b>
+    <div class="ed-act"><button id="replay" class="ghost" type="button" data-i18n="replay">↻ إعادة</button><button id="exportBtn" class="btn gold sm" type="button" data-i18n="export">⬇ تصدير الدعوة</button></div>
+  </div>
   <div class="ed-body">
-    <div class="stage"><canvas id="stage" width="720" height="1280"></canvas><div id="prog" class="prog hidden"><div></div><span></span></div></div>
+    <div class="stage"><canvas id="stage" width="720" height="1280"></canvas>
+      <div id="prog" class="prog hidden"><div></div><span></span></div></div>
     <aside class="panel">
-      <label data-i18n="lIntro">العبارة الافتتاحية</label><input id="f_intro">
-      <label data-i18n="lBride">اسم العروس</label><input id="f_bride">
-      <label data-i18n="lGroom">اسم العريس</label><input id="f_groom">
-      <label data-i18n="lDate">التاريخ</label><input id="f_date">
-      <label data-i18n="lVenue">المكان</label><input id="f_venue">
-      <label data-i18n="lMsg">رسالة</label><textarea id="f_msg" rows="2"></textarea>
-      <label data-i18n="lNameFont">خط الأسماء</label><select id="f_font1"></select>
-      <label data-i18n="lBodyFont">خط النصوص</label><select id="f_font2"></select>
-      <label data-i18n="lColor">لون النص</label><div id="swatches" class="sw"></div>
-      <label data-i18n="lAnim">حركة الظهور</label>
-      <select id="f_anim"><option value="fade">Fade ✦</option><option value="rise">Rise ↑</option><option value="zoom">Zoom</option><option value="blur">Blur</option><option value="type">Typewriter</option><option value="goldthread">خيط ذهبي ✦ Gold Thread</option><option value="petals">بتلات الورد ✿ Rose Petals</option><option value="engrave">نقش على الرخام ◈ Engrave</option></select>
-      <label data-i18n="lDur">مدة الفيديو (ثانية)</label><input id="f_dur" type="range" min="6" max="20" value="10">
+      <label for="f_intro" data-i18n="lIntro">العبارة الافتتاحية</label><input id="f_intro" maxlength="60">
+      <div class="row2"><div><label for="f_bride" data-i18n="lBride">اسم العروس</label><input id="f_bride" maxlength="24"></div>
+      <div><label for="f_groom" data-i18n="lGroom">اسم العريس</label><input id="f_groom" maxlength="24"></div></div>
+      <label for="f_date" data-i18n="lDate">التاريخ</label><input id="f_date" maxlength="40">
+      <label for="f_venue" data-i18n="lVenue">المكان</label><input id="f_venue" maxlength="44">
+      <label for="f_msg" data-i18n="lMsg">رسالة</label><textarea id="f_msg" rows="2" maxlength="60"></textarea>
+      <div class="row2"><div><label for="f_font1" data-i18n="lNameFont">خط الأسماء</label><select id="f_font1"></select></div>
+      <div><label for="f_font2" data-i18n="lBodyFont">خط النصوص</label><select id="f_font2"></select></div></div>
+      <label data-i18n="lColor">لون النص</label><div id="swatches" class="sw" role="radiogroup"></div>
+      <label for="f_anim" data-i18n="lAnim">حركة ظهور النص</label>
+      <select id="f_anim"></select>
+      <label for="f_dur"><span data-i18n="lDur">مدة النص (ثانية)</span>: <b id="durVal">8</b></label><input id="f_dur" type="range" min="6" max="16" value="8">
+      <label for="f_bg" data-i18n="lBg">فيديو خلفية خاص (اختياري)</label><input type="file" id="f_bg" accept="video/*">
     </aside>
   </div>
 </div>
-<script src="app.js"></script>
+
+<!-- Sham Cash payment modal -->
+<div id="pay" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="payTitle">
+  <div class="mbox">
+    <button class="ghost icon mclose" type="button" id="payClose" aria-label="إغلاق">✕</button>
+    <div class="crown">✦</div>
+    <h3 id="payTitle" data-i18n="payT">دعوتك الذهبية جاهزة</h3>
+    <p class="msub" data-i18n="payS">لتصدير دعوتك بجودة عالية وبدون علامة مائية، ادفع عبر شام كاش.</p>
+    <div class="price"><span data-i18n="payAmt">المبلغ</span>: <b id="payPrice"></b></div>
+    <p class="cur" data-i18n="payCur">يُقبل الدفع بالليرة السورية أو بالدولار الأمريكي.</p>
+    <div class="sham">
+      <img class="sham-logo" src="img/shamcash-logo.svg" width="19" height="22" alt=""> <b data-i18n="sham">شام كاش</b>
+      <img class="sham-qr" src="img/shamcash-qr.webp" width="220" height="288" alt="رمز شام كاش" loading="lazy">
+      <p class="sham-name" id="shamName"></p>
+      <p class="sham-code" dir="ltr"><code id="shamCode"></code></p>
+      <button class="ghost sm" type="button" id="shamCopy" data-i18n="copy">انسخ رمز الحساب</button>
+    </div>
+    <ol class="steps">
+      <li data-i18n="s1">افتح شام كاش وامسح الرمز، أو الصق رمز الحساب.</li>
+      <li data-i18n="s2">أرسل المبلغ المطلوب بالدولار أو بالليرة السورية.</li>
+      <li><span data-i18n="s3">أرسل صورة إشعار الحوالة مع رقم طلبك:</span> <b id="orderId" dir="ltr"></b></li>
+    </ol>
+    <a id="sendReceipt" class="btn gold block" href="#" data-i18n="sendR">✉ إرسال صورة الإشعار</a>
+    <p class="note" data-i18n="s4">بعد مراجعة الإشعار نرسل لك رمز التفعيل. أدخله هنا لتصدير دعوتك.</p>
+    <div class="unlock"><input id="unlockCode" dir="ltr" placeholder="RI-XXXX-XXXX" autocomplete="off" aria-label="رمز التفعيل"><button id="unlockBtn" class="btn gold sm" type="button" data-i18n="unlock">تفعيل</button></div>
+    <p id="unlockMsg" class="umsg" role="status"></p>
+  </div>
+</div>
+<div id="toast" class="toast" role="status"></div>
+<script src="codes.js?v=3" defer></script>
+<script src="app.js?v=3" defer></script>
 </body></html>
