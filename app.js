@@ -56,7 +56,8 @@ let lang=localStorage.getItem("ri_lang")==="en"?"en":"ar";
 const tr=k=>I18N[lang][k]||I18N.ar[k]||k;
 const DEF={ar:{intro:"بكل الحب ندعوكم لحضور حفل زفاف",bride:"ليلى",groom:"عمر",date:"الجمعة ٢٠ حزيران ٢٠٢٧",venue:"قصر الياسمين — دمشق",msg:"وجودكم يكمّل فرحتنا"},
  en:{intro:"Together with their families",bride:"Layla",groom:"Omar",date:"Friday, June 20, 2027",venue:"Jasmine Palace — Damascus",msg:"Your presence completes our joy"}};
-function drawInvite(c,t,s,time,dur,tv){BG[t.id](c,time);if(t.video&&!s.bgVideo){const v=tv||vid(t.video);if(v.readyState>=2){c.drawImage(v,0,0,W,H);const gr=c.createLinearGradient(0,0,0,H);gr.addColorStop(0,"rgba(0,0,0,.15)");gr.addColorStop(.5,`rgba(0,0,0,${Math.min(.55,Math.max(0,(time-3.5)*.3))})`);gr.addColorStop(1,"rgba(0,0,0,.4)");c.fillStyle=gr;c.fillRect(0,0,W,H)}}const D=s.delay||0;if(s.bgVideo&&s.bgVideo.readyState>=2){const v=s.bgVideo,r=Math.max(W/v.videoWidth,H/v.videoHeight);c.drawImage(v,(W-v.videoWidth*r)/2,(H-v.videoHeight*r)/2,v.videoWidth*r,v.videoHeight*r);c.fillStyle="rgba(0,0,0,.35)";c.fillRect(0,0,W,H)}
+function drawCover(c,v){const vw=v.videoWidth,vh=v.videoHeight;if(!vw)return;const r=Math.max(W/vw,H/vh),sw=W/r,sh=H/r;c.drawImage(v,(vw-sw)/2,(vh-sh)/2,sw,sh,0,0,W,H)}
+function drawInvite(c,t,s,time,dur,tv){BG[t.id](c,time);if(t.video&&!s.bgVideo){const v=tv||vid(t.video);if(v.readyState>=2){drawCover(c,v);const gr=c.createLinearGradient(0,0,0,H);gr.addColorStop(0,"rgba(0,0,0,.15)");gr.addColorStop(.5,`rgba(0,0,0,${Math.min(.55,Math.max(0,(time-3.5)*.3))})`);gr.addColorStop(1,"rgba(0,0,0,.4)");c.fillStyle=gr;c.fillRect(0,0,W,H)}}const D=s.delay||0;if(s.bgVideo&&s.bgVideo.readyState>=2){const v=s.bgVideo,r=Math.max(W/v.videoWidth,H/v.videoHeight);c.drawImage(v,(W-v.videoWidth*r)/2,(H-v.videoHeight*r)/2,v.videoWidth*r,v.videoHeight*r);c.fillStyle="rgba(0,0,0,.35)";c.fillRect(0,0,W,H)}
  const L=[[s.intro,s.f2,38,H*.30,0.4],[s.bride,s.f1,110,H*.42,1.2],["&",s.f1,70,H*.50,2.0],[s.groom,s.f1,110,H*.585,2.4],[s.date,s.f2,40,H*.70,3.4],[s.venue,s.f2,36,H*.75,4.0],[s.msg,s.f2,32,H*.84,4.8]];
  c.textAlign="center";c.textBaseline="middle";c.direction=/[\u0600-\u06FF]/.test(s.bride+s.intro)?"rtl":"ltr";
  L.forEach(([txt,font,size,y,start])=>{if(!txt)return;start+=D;const sp=["goldthread","petals","engrave"].includes(s.anim)?2.2:1.2;let p=Math.min(1,Math.max(0,(time-start)/sp));if(dur&&time>dur-.8)p=Math.min(p,(dur-time)/.8);p=p<0?0:p;const e=1-Math.pow(1-p,3);
@@ -135,7 +136,7 @@ $("replay").onclick=restart;$("closeEd").onclick=closeEditor;
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){if(!$("pay").classList.contains("hidden"))closePay();else if(ed.open)closeEditor()}});
 document.addEventListener("visibilitychange",()=>{const v=ed.tpl&&ed.tpl.video&&VIDS[ed.tpl.video];if(document.hidden&&v&&!ed.recording)v.pause()});
 function total(){return +$("f_dur").value+(ed.state.delay||0)}
-function renderEditor(now){let t=now-ed.start;if(!ed.recording&&t>total()+1.5){restart();t=0}drawInvite(sc,ed.tpl,ed.state,t,ed.recording?total():0)}
+function renderEditor(now){let t=now-ed.start;if(!ed.recording&&t>total()+1.5){restart();t=0}sc.setTransform(stage.width/W,0,0,stage.height/H,0,0);drawInvite(sc,ed.tpl,ed.state,t,ed.recording?total():0)}
 
 // ---- Export (requires Sham Cash unlock) ----
 $("exportBtn").onclick=()=>{if(!ed.recording)startCheckout()};
@@ -147,7 +148,7 @@ async function doExport(token){if(!token)return;if(document.hidden)await new Pro
  await ensureFonts([ed.state.f1,ed.state.f2]);
  const v=ed.state.bgVideo||(ed.tpl.video&&vid(ed.tpl.video));
  if(v&&v.readyState<3)await new Promise(r=>{v.addEventListener("canplaythrough",r,{once:true});setTimeout(r,8000)});
- let rec;try{rec=new MediaRecorder(stage.captureStream(30),{mimeType:mime,videoBitsPerSecond:6e6})}catch(e){btn.disabled=false;alert(tr("noRec"));return}
+ let rec;try{rec=new MediaRecorder(stage.captureStream(30),{mimeType:mime,videoBitsPerSecond:10e6})}catch(e){btn.disabled=false;alert(tr("noRec"));return}
  const chunks=[];rec.ondataavailable=e=>e.data&&e.data.size&&chunks.push(e.data);
  rec.onstop=()=>{ed.recording=false;ed.state.watermark=true;btn.disabled=false;$("prog").classList.add("hidden");const ext=mime.includes("mp4")?"mp4":"webm";
   const url=URL.createObjectURL(new Blob(chunks,{type:mime.split(";")[0]}));const a=document.createElement("a");a.href=url;a.download=`invitation-${(ed.state.bride||"bride").trim()}-${(ed.state.groom||"groom").trim()}.${ext}`;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),60000);toast(tr("done"))};

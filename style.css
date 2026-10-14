@@ -19,7 +19,13 @@ button{font:inherit}
 .hero{position:relative;min-height:100svh;display:grid;place-items:center;text-align:center;overflow:hidden;padding:90px 20px 40px}
 .hero-bg{position:absolute;inset:0;background:url(img/hero.webp) center/cover no-repeat;animation:kb 24s ease-in-out infinite alternate;will-change:transform}
 .hero-bg:after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at center,#0b090755,#0b0907e6 75%),linear-gradient(#0b090700 60%,var(--bg))}
-@media(min-aspect-ratio:1/1){.hero-bg{background-image:url(img/hero-wide.webp)}}
+.hero-card{display:none}
+@media(min-width:900px) and (min-aspect-ratio:1/1){
+ .hero{grid-template-columns:minmax(0,1fr) auto;gap:6vw;padding-inline:8vw;text-align:start}
+ .hero-bg{background-image:url(img/hero-blur.webp);animation:none}
+ .hero-card{display:block;position:relative;height:min(78vh,860px);width:auto;aspect-ratio:9/16;object-fit:cover;border-radius:22px;border:1px solid #d4af3766;box-shadow:0 30px 80px #000c,0 0 60px #d4af3726;grid-row:1;grid-column:2}
+ .hero-in{grid-row:1;grid-column:1}.sub{margin-inline:0}
+}
 @keyframes kb{to{transform:scale(1.06)}}
 @media(prefers-reduced-motion:reduce){.hero-bg{animation:none}html{scroll-behavior:auto}}
 .hero-in{position:relative;max-width:760px}
