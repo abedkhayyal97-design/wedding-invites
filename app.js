@@ -1,7 +1,9 @@
 "use strict";
 // ===== Royal Invites — دعوة ملكية =====
 // Owner config (Sham Cash details reused from the owner's other projects: one-million-humans / planet-novel)
-const CONFIG={price:{ar:"5 دولار",en:"5 USD"},shamName:"عبد الهادي محمد خيال",shamAccount:"e1d3c4f1e0f1215b676dceb9dc9bca08",receiptEmail:"abed.khayyal97@gmail.com"};
+const API="https://wedding-invites-api.one-million-humans.workers.dev";
+// Defaults; live values (price, Sham Cash account, WhatsApp) come from the server /api/config
+const CONFIG={price:{ar:"5 دولار",en:"5 USD"},shamName:"عبد الهادي محمد خيال",shamAccount:"e1d3c4f1e0f1215b676dceb9dc9bca08",whatsapp:"963995404257"};
 const W=720,H=1280;
 const FONTS=[["Aref Ruqaa","عارف رقعة"],["Amiri","أميري"],["Reem Kufi","ريم كوفي"],["Lateef","لطيف"],["Marhey","مرحي"],["Great Vibes","Great Vibes"],["Parisienne","Parisienne"],["Cinzel","Cinzel"],["Playfair Display","Playfair"],["Cormorant Garamond","Cormorant"],["Tajawal","تجوال"]];
 const COLORS=["#f5e6b8","#d4af37","#e8c07d","#ffffff","#f3d1d1","#c9b27c","#b76e79"];
@@ -46,9 +48,9 @@ const T=[
 T.forEach(t=>{if(t.slug){t.video="videos/web/"+t.slug+".mp4";t.loop="videos/loop/"+t.slug+".mp4";t.poster="img/"+t.slug+".webp"}});
 const ANIMS=[["fade","✦ تلاشي","✦ Fade"],["rise","↑ صعود","↑ Rise"],["zoom","تكبير","Zoom"],["blur","ضباب","Blur"],["type","آلة كاتبة","Typewriter"],["goldthread","خيط ذهبي","Gold thread"],["petals","بتلات الورد","Rose petals"],["engrave","نقش على الرخام","Marble engraving"]];
 const I18N={ar:{},en:{brand:"Royal Invites",navT:"Templates",kicker:"For the night of a lifetime",heroT:"Luxury Wedding Video Invitations",heroS:"Pick a template, type the names and date, and get a golden video invitation ready to share in a minute.",cta:"Design your invitation",tT:"Choose your template",tHint:"Hover or tap a template to preview it, then click to edit",foot:"© Royal Invites — made with love",replay:"↻ Replay",export:"⬇ Export invitation",lIntro:"Opening line",lBride:"Bride",lGroom:"Groom",lDate:"Date",lVenue:"Venue",lMsg:"Message",lNameFont:"Names font",lBodyFont:"Body font",lColor:"Text color",lAnim:"Text entrance",lDur:"Text duration (sec)",lBg:"Your own background video (optional)",
- payT:"Your golden invitation is ready",payS:"To export your invitation in high quality without a watermark, pay with Sham Cash.",payAmt:"Amount",payCur:"Payment is accepted in Syrian pounds or US dollars.",sham:"Sham Cash",copy:"Copy account code",s1:"Open Sham Cash and scan the QR, or paste the account code.",s2:"Send the amount in US dollars or Syrian pounds.",s3:"Send a photo of the transfer receipt with your order number:",sendR:"✉ Send the receipt photo",s4:"After we review the receipt we send you an unlock code. Enter it here to export your invitation.",unlock:"Unlock",
- copied:"Copied",okU:"Unlocked ✦ exporting your invitation…",badU:"Invalid code. Check it and try again.",cine:"Cinematic",anim:"Animated",noRec:"Your browser can't record video. Please use Chrome, Edge or Safari 14.1+.",done:"Your invitation has been downloaded ✦",wm:"Preview · Royal Invites",mailS:"Royal Invites – Sham Cash receipt",mailB:"Hello,\nAttached is the Sham Cash transfer receipt.\nOrder number: {id}\nNames: {n}\n"}};
-const AR_EXTRA={copied:"تم النسخ",okU:"تم التفعيل ✦ جاري تصدير دعوتك…",badU:"رمز غير صحيح، تأكد منه وحاول مجدداً.",cine:"سينمائي",anim:"متحرك",noRec:"المتصفح لا يدعم تسجيل الفيديو. استخدم Chrome أو Edge أو Safari 14.1+.",done:"تم تنزيل دعوتك ✦",wm:"معاينة · دعوة ملكية",mailS:"دعوة ملكية – إشعار شام كاش",mailB:"مرحباً،\nمرفق صورة إشعار حوالة شام كاش.\nرقم الطلب: {id}\nالأسماء: {n}\n"};
+ payT:"Your golden invitation is ready",payS:"To export your invitation in high quality without a watermark, pay with Sham Cash.",payAmt:"Amount",payCur:"Payment is accepted in Syrian pounds or US dollars.",sham:"Sham Cash",copy:"Copy account code",s1:"Open Sham Cash and scan the QR, or paste the account code.",s2:"Send the amount in US dollars or Syrian pounds.",s3:"Send the transfer receipt photo on WhatsApp with your order number:",sendR:"Send the receipt on WhatsApp",s4:"Once we verify the receipt we confirm your order and export unlocks here automatically — keep this window open.",waiting:"Waiting for payment confirmation…",paidOk:"Payment confirmed ✦ exporting your invitation…",rejected:"This order was not confirmed. Contact us on WhatsApp.",netErr:"Connection problem, retrying…",limit:"Export limit for this order reached. Contact us on WhatsApp.",
+ copied:"Copied",okU:"Unlocked ✦ exporting your invitation…",badU:"Invalid code. Check it and try again.",cine:"Cinematic",anim:"Animated",noRec:"Your browser can't record video. Please use Chrome, Edge or Safari 14.1+.",done:"Your invitation has been downloaded ✦",wm:"Preview · Royal Invites",waT:"Hello, I paid via Sham Cash for my Royal Invites invitation.\nOrder number: {id}\nNames: {n}\nReceipt photo attached."}};
+const AR_EXTRA={copied:"تم النسخ",paidOk:"تم تأكيد الدفع ✦ جاري تصدير دعوتك…",rejected:"لم يتم تأكيد هذا الطلب. تواصل معنا عبر واتساب.",netErr:"مشكلة في الاتصال، نعيد المحاولة…",limit:"انتهى عدد مرات التصدير لهذا الطلب. تواصل معنا عبر واتساب.",okU:"تم التفعيل ✦ جاري تصدير دعوتك…",badU:"رمز غير صحيح، تأكد منه وحاول مجدداً.",cine:"سينمائي",anim:"متحرك",noRec:"المتصفح لا يدعم تسجيل الفيديو. استخدم Chrome أو Edge أو Safari 14.1+.",done:"تم تنزيل دعوتك ✦",wm:"معاينة · دعوة ملكية",waT:"مرحباً، دفعت عبر شام كاش لدعوتي من دعوة ملكية.\nرقم الطلب: {id}\nالأسماء: {n}\nمرفق صورة الإشعار."};
 document.querySelectorAll("[data-i18n]").forEach(e=>I18N.ar[e.dataset.i18n]=e.textContent);Object.assign(I18N.ar,AR_EXTRA);
 let lang=localStorage.getItem("ri_lang")==="en"?"en":"ar";
 const tr=k=>I18N[lang][k]||I18N.ar[k]||k;
@@ -115,9 +117,9 @@ fillSelects();
 COLORS.forEach(col=>{const b=document.createElement("button");b.type="button";b.style.background=col;b.setAttribute("role","radio");b.setAttribute("aria-label",col);b.onclick=()=>{ed.state.color=col;mark()};$("swatches").append(b)});
 function mark(){[...$("swatches").children].forEach((b,k)=>b.setAttribute("aria-checked",COLORS[k]==ed.state.color))}
 const fields=["intro","bride","groom","date","venue","msg"];
-const unlocked=()=>{const c=localStorage.getItem("ri_code");return !!(c&&window.RI_UNLOCKED_OK)};
+
 function openEditor(i){const t=T[i];ed.tpl=t;loadEditorFonts();
- ed.state={...DEF[lang],f1:t.f1,f2:t.f2,color:t.c,anim:t.anim||"fade",delay:t.delay||0,watermark:!unlocked(),bgVideo:null};
+ ed.state={...DEF[lang],f1:t.f1,f2:t.f2,color:t.c,anim:t.anim||"fade",delay:t.delay||0,watermark:true,bgVideo:null};
  fields.forEach(f=>$("f_"+f).value=ed.state[f]);$("f_font1").value=t.f1;$("f_font2").value=t.f2;$("f_anim").value=ed.state.anim;$("f_bg").value="";mark();$("edName").textContent=t[lang];
  $("editor").classList.remove("hidden");document.body.style.overflow="hidden";ed.open=true;restart();
  cancelAnimationFrame(ed.raf);const loop=ts=>{if(!ed.open)return;renderEditor(ts/1000);ed.raf=requestAnimationFrame(loop)};ed.raf=requestAnimationFrame(loop);
@@ -136,8 +138,8 @@ function total(){return +$("f_dur").value+(ed.state.delay||0)}
 function renderEditor(now){let t=now-ed.start;if(!ed.recording&&t>total()+1.5){restart();t=0}drawInvite(sc,ed.tpl,ed.state,t,ed.recording?total():0)}
 
 // ---- Export (requires Sham Cash unlock) ----
-$("exportBtn").onclick=()=>{if(ed.recording)return;if(unlocked())doExport();else openPay()};
-async function doExport(){
+$("exportBtn").onclick=()=>{if(!ed.recording)startCheckout()};
+async function doExport(token){if(!token)return;if(document.hidden)await new Promise(r=>{const f=()=>{if(!document.hidden){document.removeEventListener("visibilitychange",f);r()}};document.addEventListener("visibilitychange",f)});
  const types=["video/mp4;codecs=avc1.42E01E","video/mp4;codecs=avc1","video/mp4","video/webm;codecs=vp9","video/webm;codecs=vp8","video/webm"];
  const mime=window.MediaRecorder&&stage.captureStream?types.find(m=>MediaRecorder.isTypeSupported(m)):null;
  if(!mime){alert(tr("noRec"));return}
@@ -147,25 +149,38 @@ async function doExport(){
  if(v&&v.readyState<3)await new Promise(r=>{v.addEventListener("canplaythrough",r,{once:true});setTimeout(r,8000)});
  let rec;try{rec=new MediaRecorder(stage.captureStream(30),{mimeType:mime,videoBitsPerSecond:6e6})}catch(e){btn.disabled=false;alert(tr("noRec"));return}
  const chunks=[];rec.ondataavailable=e=>e.data&&e.data.size&&chunks.push(e.data);
- rec.onstop=()=>{ed.recording=false;btn.disabled=false;$("prog").classList.add("hidden");const ext=mime.includes("mp4")?"mp4":"webm";
+ rec.onstop=()=>{ed.recording=false;ed.state.watermark=true;btn.disabled=false;$("prog").classList.add("hidden");const ext=mime.includes("mp4")?"mp4":"webm";
   const url=URL.createObjectURL(new Blob(chunks,{type:mime.split(";")[0]}));const a=document.createElement("a");a.href=url;a.download=`invitation-${(ed.state.bride||"bride").trim()}-${(ed.state.groom||"groom").trim()}.${ext}`;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),60000);toast(tr("done"))};
  ed.recording=true;restart();$("prog").classList.remove("hidden");rec.start(500);
  const dur=total();const iv=setInterval(()=>{const p=Math.min(1,(performance.now()/1000-ed.start)/dur);$("prog").firstElementChild.style.width=p*100+"%";$("prog").lastElementChild.textContent=Math.round(p*100)+"%";if(p>=1){clearInterval(iv);setTimeout(()=>rec.state!=="inactive"&&rec.stop(),300)}},100)}
 
-// ---- Sham Cash payment modal ----
-let orderId=sessionStorage.getItem("ri_order");if(!orderId){const A="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";orderId="WI-"+Array.from(crypto.getRandomValues(new Uint8Array(6)),b=>A[b%A.length]).join("");sessionStorage.setItem("ri_order",orderId)}
-function openPay(){$("payPrice").textContent=CONFIG.price[lang];$("shamName").textContent=CONFIG.shamName;$("shamCode").textContent=CONFIG.shamAccount;$("orderId").textContent=orderId;
- const n=`${ed.state.bride||""} & ${ed.state.groom||""}`;$("sendReceipt").href=`mailto:${CONFIG.receiptEmail}?subject=${encodeURIComponent(tr("mailS")+" "+orderId)}&body=${encodeURIComponent(tr("mailB").replace("{id}",orderId).replace("{n}",n))}`;
- $("unlockMsg").textContent="";$("unlockMsg").className="umsg";$("pay").classList.remove("hidden");setTimeout(()=>$("payClose").focus(),50)}
-function closePay(){$("pay").classList.add("hidden")}
+// ---- Sham Cash checkout (server-verified via Cloudflare Worker) ----
+async function api(path,opt={}){const r=await fetch(API+path,{...opt,headers:{"content-type":"application/json"}});const d=await r.json().catch(()=>({}));if(!r.ok&&r.status>=500)throw new Error("net");return {ok:r.ok,status:r.status,...d}}
+fetch(API+"/api/config").then(r=>r.json()).then(c=>Object.assign(CONFIG,c)).catch(()=>{});
+let order=null,pollT=0;try{order=JSON.parse(localStorage.getItem("ri_order2")||"null")}catch(e){}
+function setStatus(k,cls){$("payStatus").className="status "+(cls||"");$("payStatusTxt").textContent=tr(k)}
+async function startCheckout(){const btn=$("exportBtn");btn.disabled=true;
+ try{
+  if(order){const st=await api("/api/orders/"+order.id);if(st.status==="paid")return await unlockAndExport();if(st.status==="pending"){openPay();return}order=null}
+  const r=await api("/api/orders",{method:"POST",body:JSON.stringify({bride:ed.state.bride,groom:ed.state.groom,template:ed.tpl.en})});
+  if(!r.ok){toast(tr("netErr"));return}
+  order={id:r.id,n:`${ed.state.bride} & ${ed.state.groom}`};localStorage.setItem("ri_order2",JSON.stringify(order));openPay();
+ }catch(e){toast(tr("netErr"))}finally{btn.disabled=false}}
+async function unlockAndExport(){const t=await api("/api/orders/"+order.id+"/token",{method:"POST"});
+ if(t.token){closePay();toast(tr("paidOk"));await doExport(t.token)}else if(t.error==="limit_reached"){openPay();setStatus("limit","err")}else openPay()}
+function openPay(){$("payPrice").textContent=CONFIG.price[lang];$("shamName").textContent=CONFIG.shamName;$("shamCode").textContent=CONFIG.shamAccount;$("orderId").textContent=order.id;
+ const n=`${ed.state.bride||""} & ${ed.state.groom||""}`;$("sendReceipt").href=`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(tr("waT").replace("{id}",order.id).replace("{n}",n))}`;
+ setStatus("waiting");$("pay").classList.remove("hidden");setTimeout(()=>$("payClose").focus(),50);poll()}
+function closePay(){$("pay").classList.add("hidden");clearTimeout(pollT)}
+async function poll(){clearTimeout(pollT);if($("pay").classList.contains("hidden")||!order)return;
+ try{const st=await api("/api/orders/"+order.id);
+  if(st.status==="paid"){setStatus("paidOk","paid");setTimeout(unlockAndExport,900);return}
+  if(st.status==="rejected"){setStatus("rejected","err");localStorage.removeItem("ri_order2");order=null;return}
+  setStatus("waiting")}catch(e){setStatus("netErr","err")}
+ pollT=setTimeout(poll,document.hidden?15000:5000)}
+document.addEventListener("visibilitychange",()=>{if(!document.hidden&&!$("pay").classList.contains("hidden"))poll()});
 $("payClose").onclick=closePay;$("pay").addEventListener("click",e=>{if(e.target.id==="pay")closePay()});
 $("shamCopy").onclick=async()=>{try{await navigator.clipboard.writeText(CONFIG.shamAccount)}catch(e){const r=document.createRange();r.selectNode($("shamCode"));getSelection().removeAllRanges();getSelection().addRange(r);document.execCommand("copy")}toast(tr("copied"))};
-async function sha(s){const d=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(s));return [...new Uint8Array(d)].map(b=>b.toString(16).padStart(2,"0")).join("")}
-async function checkStored(){const c=localStorage.getItem("ri_code");window.RI_UNLOCKED_OK=!!(c&&window.RI_CODE_HASHES&&RI_CODE_HASHES.has(await sha(c)))}
-$("unlockBtn").onclick=async()=>{const c=$("unlockCode").value.trim().toUpperCase().replace(/\s/g,"");const m=$("unlockMsg");
- if(window.RI_CODE_HASHES&&RI_CODE_HASHES.has(await sha(c))){localStorage.setItem("ri_code",c);window.RI_UNLOCKED_OK=true;m.textContent=tr("okU");m.className="umsg ok";ed.state.watermark=false;setTimeout(()=>{closePay();doExport()},900)}
- else{m.textContent=tr("badU");m.className="umsg err"}};
-$("unlockCode").addEventListener("keydown",e=>{if(e.key==="Enter")$("unlockBtn").click()});
 
 // ---- Language ----
 function applyLang(){const h=document.documentElement;h.lang=lang;h.dir=lang=="ar"?"rtl":"ltr";
@@ -173,4 +188,4 @@ function applyLang(){const h=document.documentElement;h.lang=lang;h.dir=lang=="a
  $("langBtn").textContent=lang=="ar"?"English":"العربية";$("langBtn").lang=lang=="ar"?"en":"ar";document.title=lang=="ar"?"دعوة ملكية | دعوات زفاف فيديو فاخرة":"Royal Invites | Luxury Wedding Video Invitations";
  fillSelects();buildGrid();if(ed.open)$("edName").textContent=ed.tpl[lang]}
 $("langBtn").onclick=()=>{lang=lang=="ar"?"en":"ar";localStorage.setItem("ri_lang",lang);applyLang()};
-applyLang();checkStored();
+applyLang();
